@@ -1,9 +1,12 @@
 {
-    "dependencies": {
+    "devDependencies": {
         "electron": "^26.3.0"
     },
     "scripts": {
         "dev": "npx electron ."
     },
-    "main": "window.js"
+    "main": "window.js",
+    "name": "HyperEdit",
+    "version": "1.0.0",
+    "author": "a-riceeater"
 }
