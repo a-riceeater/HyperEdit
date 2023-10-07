@@ -1,0 +1,32 @@
+:root {
+    --cbg: #2A2B2A;
+    --vista: #8CA0D7;
+}
+
+body {
+    background-color: var(--cbg);
+}
+
+.topbar {
+    background-color: var(--vista);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 100%;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.topbar-btn {
+    -webkit-app-region: no-drag;
+}
+
+.topbar > .dft-logo {
+    height: 80%;
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translate(0%, -50%);
+}
