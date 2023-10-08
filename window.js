@@ -65,7 +65,10 @@ function setMainMenu(win) {
                 },
                 {
                     label: "Open Folder",
-                    accelerator: "Cmd+Shift+O"
+                    accelerator: "Cmd+Shift+O",
+                    click() {
+                        openFolder();
+                    }
                 },
                 { type: "separator" },
                 {
@@ -195,3 +198,13 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 })
+
+const { dialog, ipcMain } = require("electron");
+const fs = require("fs");
+
+ipcMain.handle("openFolder", openFolder);
+
+async function openFolder() {
+    const result = dialog.showOpenDialogSync({ properties: ['openDirectory'] })
+    return result;
+}
