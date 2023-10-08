@@ -1,10 +1,13 @@
-@import url("https://fonts.googleapis.com/css?family=Inter");
 @import url("https://fonts.googleapis.com/css?family=Roboto");
-@import url("https://fonts.googleapis.com/css?family=Nunito Sans");
+@import url("./fonts/fonts.css");
 
 :root {
     --cbg: #2A2B2A;
     --vista: #8CA0D7;
+    --jordy: #91C4F2;
+    --av: #9D79BC;
+    --pur: #A14DA0;
+    --mar: #7E1F86;
 }
 
 body {
@@ -20,6 +23,50 @@ body {
     width: 100%;
     -webkit-user-select: none;
     -webkit-app-region: drag;
+}
+
+.leftbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background-color: var(--vista);
+}
+
+.tabbar {
+    position: fixed;
+    top: 30px;
+    left: 20%;
+    height: 40px;
+    width: calc(100% - 20%);
+    background-color: var(--vista);
+    user-select: none;
+}
+
+#of-tb {
+    margin-top: 70px;
+    margin-left: 10px;
+    color: var(--mar);
+    font-family: "Lato", sans-serif;
+}
+
+.tabbar > .tab-btn {
+    height: 40px;
+    width: 150px;
+    background-color: var(--pur);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-right: 1.8px solid var(--cbg);
+    font-family: "Lato", sans-serif;
+    color: lightgray;
+    float: left;
+}
+
+.tabbar > .tab-btn.selected {
+    background-color: var(--mar) !important;
 }
 
 .topbar-btns {
@@ -45,10 +92,17 @@ body {
     z-index: 1;
     white-space: nowrap;
     height: 30px;
+    user-select: none;
+}
+
+.tab-btn > .tb-close {
+    color: black;
+    display: flex;
+    vertical-align: middle;
 }
 
 .topbar-btn:hover {
-    background-color: #7487bb;
+    background-color: #7496bb;
 }
 
 .topbar > .dft-logo {
@@ -57,4 +111,52 @@ body {
     position: absolute;
     top: 50%;
     transform: translate(0%, -50%);
+}
+
+.editor {
+    position: fixed;
+    left: 20%;
+    top: calc(30px + 40px);
+    width: calc(100% - 20%);
+    height: calc(100% - calc(30px + 40px))
+}
+
+.editor > .welcome-content {
+    margin-left: 105px;
+    margin-top: 105px;
+    cursor: default;
+    user-select: none;
+}
+
+.editor > .welcome-content > h1 {
+    font-family: "DM Sans", sans-serif;
+    font-size: 40px;
+    color: var(--av);
+    margin-bottom: 15px;
+}
+
+.editor > .welcome-content > .he-desc {
+    margin-top: 0;
+    font-size: 18px;
+    font-family: "Raleway", sans-serif;
+    color: lightgray;
+}
+
+.editor > .welcome-content > .start-title {
+    margin-top: 80px;
+    color: var(--jordy);
+    font-family: "DM Sans", sans-serif;
+    font-size: 22px;
+}
+
+.editor > .welcome-content > .st-op {
+    color: var(--pur);
+    font-family: "Raleway", sans-serif;
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.editor > .welcome-content > .st-op:hover {
+    text-decoration: underline;
 }

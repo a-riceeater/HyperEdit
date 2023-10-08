@@ -1,7 +1,9 @@
 const { app, BrowserWindow, Menu } = require('electron')
-const path = require('path')
+const path = require('path');
 
-function createWindow() {
+const VERSION = "1.0.0"
+
+function createMainWindow() {
     const win = new BrowserWindow({
         width: 1920,
         height: 1080,
@@ -19,10 +21,10 @@ function createWindow() {
     })
 
     win.loadFile(path.join(__dirname, "page", "window.html"))
-    setMainMenu();
+    setMainMenu(win);
 }
 
-function setMainMenu() {
+function setMainMenu(win) {
     const isMac = process.platform === 'darwin'
 
     const template = [
@@ -48,7 +50,40 @@ function setMainMenu() {
         {
             label: 'File',
             submenu: [
-                isMac ? { role: 'close' } : { role: 'quit' }
+                {
+                    label: "New File",
+                    accelerator: "Cmd+N"
+                },
+                {
+                    label: "New Window",
+                    accelerator: "Cmd+Shift+N"
+                },
+                { type: "separator" },
+                {
+                    label: "Open File",
+                    accelerator: "Cmd+O"
+                },
+                {
+                    label: "Open Folder",
+                    accelerator: "Cmd+Shift+O"
+                },
+                { type: "separator" },
+                {
+                    label: "Save",
+                    accelerator: "Cmd+S"
+                },
+                { type: "separator" },
+                {
+                    label: "Close File",
+                    accelerator: "Cmd+W"
+                },
+                {
+                    label: "Close Window",
+                    accelerator: "Cmd+shift+W",
+                    click() {
+                        win.close()
+                    }
+                }
             ]
         },
         // { role: 'editMenu' }
@@ -133,11 +168,27 @@ function setMainMenu() {
     Menu.setApplicationMenu(menu)
 }
 
+function createLoaderWindow() {
+    const win = new BrowserWindow({
+        height: 450,
+        width: 330,
+        frame: false,
+        resizable: false
+    })
+
+    win.loadFile(path.join(__dirname, "page", "updater.html"));
+    
+    setTimeout(() => {
+        win.close();
+        createMainWindow();
+    }, 3000)
+}
+
 app.whenReady().then(() => {
-    createWindow()
+    createMainWindow() //createLoaderWindow()
 
     app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+        if (BrowserWindow.getAllWindows().length === 0) createLoaderWindow()
     })
 })
 
