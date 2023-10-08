@@ -65,6 +65,10 @@ body {
     float: left;
 }
 
+.tabbar > .tab-btn > span:hover {
+    text-decoration: line-through;
+}
+
 .tabbar > .tab-btn.selected {
     background-color: var(--mar) !important;
 }
@@ -159,4 +163,9 @@ body {
 
 .editor > .welcome-content > .st-op:hover {
     text-decoration: underline;
+}
+
+img {
+    -webkit-user-drag: none;
+    user-select: none;
 }
