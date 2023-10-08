@@ -56,6 +56,5 @@ body {
     width: 30px;
     position: absolute;
     top: 50%;
-    left: 5px;
     transform: translate(0%, -50%);
 }

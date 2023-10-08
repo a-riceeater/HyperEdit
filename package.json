@@ -3,7 +3,9 @@
         "electron": "^26.3.0"
     },
     "scripts": {
-        "dev": "npx electron ."
+        "dev": "npx electron .",
+        "build-win": "npx electron-packager . HyperEdit --platform=win32 --icon=./page/logo.ico",
+        "build-mac": "npx electron-packager . HyperEdit --plaform=macos --icon=./page/logo.ico"
     },
     "main": "window.js",
     "name": "HyperEdit",

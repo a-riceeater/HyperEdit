@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 
 function createWindow() {
@@ -12,12 +12,125 @@ function createWindow() {
             devTools: true
         },
         resizable: true,
-        frame: false,
+        frame: process.platform == "darwin" ? true : false,
         contextIsolation: false,
         enableRemoteModule: true,
+        titleBarStyle: process.platform == "darwin" ? 'hidden' : null,
     })
 
     win.loadFile(path.join(__dirname, "page", "window.html"))
+    setMainMenu();
+}
+
+function setMainMenu() {
+    const isMac = process.platform === 'darwin'
+
+    const template = [
+        // { role: 'appMenu' }
+        ...(isMac
+            ? [{
+                label: app.name,
+                submenu: [
+                    { role: 'about' },
+                    { type: 'separator' },
+                    { 
+                        label: "Check for updates",
+                        click() {
+                            // search for updates
+                            console.log("Searching for updates...")
+                        }
+                     },
+                    { role: 'quit' }
+                ]
+            }]
+            : []),
+        // { role: 'fileMenu' }
+        {
+            label: 'File',
+            submenu: [
+                isMac ? { role: 'close' } : { role: 'quit' }
+            ]
+        },
+        // { role: 'editMenu' }
+        {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                ...(isMac
+                    ? [
+                        { role: 'pasteAndMatchStyle' },
+                        { role: 'delete' },
+                        { role: 'selectAll' },
+                        { type: 'separator' },
+                        {
+                            label: 'Speech',
+                            submenu: [
+                                { role: 'startSpeaking' },
+                                { role: 'stopSpeaking' }
+                            ]
+                        }
+                    ]
+                    : [
+                        { role: 'delete' },
+                        { type: 'separator' },
+                        { role: 'selectAll' }
+                    ])
+            ]
+        },
+        // { role: 'viewMenu' }
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },
+                { role: 'forceReload' },
+                { role: 'toggleDevTools' },
+                { type: 'separator' },
+                { role: 'resetZoom' },
+                { role: 'zoomIn' },
+                { role: 'zoomOut' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' }
+            ]
+        },
+        // { role: 'windowMenu' }
+        {
+            label: 'Window',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'zoom' },
+                ...(isMac
+                    ? [
+                        { type: 'separator' },
+                        { role: 'front' },
+                        { type: 'separator' },
+                        { role: 'window' }
+                    ]
+                    : [
+                        { role: 'close' }
+                    ])
+            ]
+        },
+        {
+            role: 'help',
+            submenu: [
+                {
+                    label: 'Learn More',
+                    click: async () => {
+                        const { shell } = require('electron')
+                        await shell.openExternal('https://electronjs.org')
+                    }
+                }
+            ]
+        }
+    ]
+
+    const menu = Menu.buildFromTemplate(template)
+    Menu.setApplicationMenu(menu)
 }
 
 app.whenReady().then(() => {
@@ -29,7 +142,5 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+    if (process.platform !== 'darwin') app.quit();
 })
