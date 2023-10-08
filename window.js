@@ -67,7 +67,7 @@ function setMainMenu(win) {
                     label: "Open Folder",
                     accelerator: "Cmd+Shift+O",
                     click() {
-                        openFolder();
+                        win.webContents.send("openFolder");
                     }
                 },
                 { type: "separator" },
