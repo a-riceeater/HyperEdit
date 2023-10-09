@@ -15,3 +15,7 @@ document.querySelectorAll(".tabbar > .tab-btn > span").forEach(el => {
         e.target.parentNode.remove();
     })
 })
+
+function loadFile(loc) {
+    
+}
