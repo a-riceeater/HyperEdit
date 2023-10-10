@@ -18,7 +18,14 @@ document.querySelectorAll(".tabbar > .tab-btn > span").forEach(el => {
 
 class Tab {
     constructor (file) {
-        const data = fs.readFileSync(file, "utf8");
-        console.dir(data);
+        const fdata = fs.readFileSync(file, "utf8");
+        
+        document.querySelector(".editor").innerHTML = `
+        <div id="lineNumbers">1</div>
+        <pre>
+            <div id="highlight"></div>
+        </pre>
+        <textarea id="codeInput" spellcheck="false" autofocus="true" autocomplete="off">${fdata}</textarea>
+        `
     }
 }

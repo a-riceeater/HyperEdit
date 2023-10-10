@@ -170,3 +170,21 @@ img {
     -webkit-user-drag: none;
     user-select: none;
 }
+
+#codeInput {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: 0;
+}
+
+#lineNumbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+}
