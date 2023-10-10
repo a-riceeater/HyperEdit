@@ -174,17 +174,32 @@ img {
 #codeInput {
     position: absolute;
     top: 0;
-    left: 10px;
-    width: 100%;
+    left: 25px;
+    width: calc(100% - 25px);
     height: 100%;
     border: none;
     outline: 0;
+    background-color: var(--cbg);
+    padding-left: 5px;
+    padding-top: 5px;
+    box-sizing: border-box;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 14px;
+}
+
+#codeInput::-webkit-scrollbar {
 }
 
 #lineNumbers {
     position: absolute;
     top: 0;
     left: 0;
-    width: 10px;
+    width: 25px;
     height: 100%;
+    background-color: var(--cbg);
+    color: lightgray;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 14px;
+    padding-top: 5px;
+    text-align: center;
 }
