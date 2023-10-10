@@ -203,8 +203,12 @@ const { dialog, ipcMain } = require("electron");
 const fs = require("fs");
 
 ipcMain.handle("openFolder", openFolder);
+ipcMain.handle("openFile", openFile);
 
 async function openFolder() {
-    const result = dialog.showOpenDialogSync({ properties: ['openDirectory'] })
-    return result;
+    return dialog.showOpenDialogSync({ properties: ['openDirectory'] });
+}
+
+async function openFile() {
+    return dialog.showOpenDialogSync({ properties: ['openFile'] });
 }

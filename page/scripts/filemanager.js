@@ -5,7 +5,8 @@ async function openFolder() {
 ipcRenderer.on("openFolder", openFolder);
 
 async function openFile() {
-    const file = await ipcRenderer.invoke("openFile");
+    const file = (await ipcRenderer.invoke("openFile"))[0];
+    const tab = new Tab(file);
 }
 ipcRenderer.on("openFile", openFile);
 

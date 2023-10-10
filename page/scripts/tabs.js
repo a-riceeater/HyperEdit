@@ -16,6 +16,9 @@ document.querySelectorAll(".tabbar > .tab-btn > span").forEach(el => {
     })
 })
 
-function loadFile(loc) {
-    
+class Tab {
+    constructor (file) {
+        const data = fs.readFileSync(file, "utf8");
+        console.dir(data);
+    }
 }
