@@ -31,10 +31,12 @@ class Tab {
             ${linedata}
         </div>
         <pre>
-            <div id="highlight">${hljs.highlight(fdata, { language: "javascript" }).value}</div>
+            <div id="highlight">${hljs.highlight(fdata, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value}</div>
         </pre>
         <textarea id="codeInput" spellcheck="false" autofocus="true" autocomplete="off">${fdata}</textarea>
         `
+
+        currentTab = file;
 
         setTimeout(() => {
             document.querySelector("#lineNumbers").addEventListener("scroll", (e) => {
@@ -50,7 +52,7 @@ class Tab {
 
             document.querySelector("#codeInput").addEventListener("keydown", (e) => {
                 setTimeout(() => {
-                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: "javascript" }).value
+                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value
                     document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
