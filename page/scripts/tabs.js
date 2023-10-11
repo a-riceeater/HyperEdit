@@ -45,7 +45,7 @@ class Tab {
                     </div>
                     `
                 }
-    
+
                 tbe.remove();
             })
         })
@@ -82,6 +82,15 @@ class Tab {
                     document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
+
+                    let lined2 = "";
+                    let line2 = e.target.value.split("\n").length
+
+                    for (let i = 0; i < line2; i++) {
+                        lined2 += `${i + 1}<br>`
+                    }
+
+                    document.getElementById("lineNumbers").innerHTML = lined2;
                 })
             })
         })
