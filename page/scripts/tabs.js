@@ -27,13 +27,35 @@ class Tab {
         }
         
         document.querySelector(".editor").innerHTML = `
-        <div id="lineNumbers">
+        <div id="lineNumbers" onscroll="return false">
             ${linedata}
         </div>
         <pre>
-            <div id="highlight"></div>
+            <div id="highlight">${hljs.highlight(fdata, { language: "javascript" }).value}</div>
         </pre>
         <textarea id="codeInput" spellcheck="false" autofocus="true" autocomplete="off">${fdata}</textarea>
         `
+
+        setTimeout(() => {
+            document.querySelector("#lineNumbers").addEventListener("scroll", (e) => {
+                document.querySelector("#codeInput").scrollTop = e.target.scrollTop;
+                document.querySelector("#highlight").scrollTop = e.target.scrollTop;
+            });
+            
+            document.querySelector("#codeInput").addEventListener("scroll", (e) => {
+                document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
+                document.querySelector("#highlight").scrollTop = e.target.scrollTop;
+                document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
+            });
+
+            document.querySelector("#codeInput").addEventListener("keydown", (e) => {
+                setTimeout(() => {
+                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: "javascript" }).value
+                    document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
+                    document.querySelector("#highlight").scrollTop = e.target.scrollTop;
+                    document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
+                })
+            })
+        })
     }
 }
