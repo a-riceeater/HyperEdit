@@ -61,7 +61,10 @@ function setMainMenu(win) {
                 { type: "separator" },
                 {
                     label: "Open File",
-                    accelerator: "Cmd+O"
+                    accelerator: "Cmd+O",
+                    click() {
+                        win.webContents.send("openFile")
+                    }
                 },
                 {
                     label: "Open Folder",
@@ -73,7 +76,10 @@ function setMainMenu(win) {
                 { type: "separator" },
                 {
                     label: "Save",
-                    accelerator: "Cmd+S"
+                    accelerator: "Cmd+S",
+                    click() {
+                        win.webContents.send("saveFile");
+                    }
                 },
                 { type: "separator" },
                 {
