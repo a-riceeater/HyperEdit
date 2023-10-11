@@ -19,9 +19,17 @@ document.querySelectorAll(".tabbar > .tab-btn > span").forEach(el => {
 class Tab {
     constructor (file) {
         const fdata = fs.readFileSync(file, "utf8");
+        let lines = fdata.split("\n").length;
+        let linedata = "";
+
+        for (let i = 0; i < lines; i++) {
+            linedata += `${i + 1}<br>`
+        }
         
         document.querySelector(".editor").innerHTML = `
-        <div id="lineNumbers">1</div>
+        <div id="lineNumbers">
+            ${linedata}
+        </div>
         <pre>
             <div id="highlight"></div>
         </pre>

@@ -188,6 +188,20 @@ img {
 }
 
 #codeInput::-webkit-scrollbar {
+    width: 15px;
+    border-left: 1px solid rgb(211, 211, 211, 0.1);
+}
+
+#codeInput::--webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#codeInput::-webkit-scrollbar-thumb {
+    background-color: rgb(211, 211, 211, 0.3);
+}
+
+#codeInput::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(211, 211, 211, 0.5);
 }
 
 #lineNumbers {
