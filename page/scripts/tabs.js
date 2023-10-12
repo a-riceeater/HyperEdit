@@ -104,10 +104,7 @@ class Tab {
                             insertAtCursor(document.getElementById("codeInput"), "\`")
                             break
                         case "Tab":
-                            insertAtCursor(document.getElementById("codeInput"), "\t")
-                            insertAtCursor(document.getElementById("codeInput"), " ")
-                            insertAtCursor(document.getElementById("codeInput"), " ")
-                            insertAtCursor(document.getElementById("codeInput"), " ")
+                            insertAtCursor(document.getElementById("codeInput"), "    ")
                             break
                     }
 
