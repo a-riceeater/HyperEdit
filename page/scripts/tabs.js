@@ -29,16 +29,18 @@ class Tab {
 
         document.querySelectorAll(".tab-btn.selected").forEach(e => e.classList.remove("selected"));
 
+        currentTab = `tab-${file.replace(/^.*[\\\/]/, '').replace(".", "")}-${Math.floor(Math.random() * 11)}`
+
         const tbe = document.createElement("div");
         tbe.innerHTML = `<span>${file.replace(/^.*[\\\/]/, '')}</span>`
         tbe.classList.add("tab-btn");
         tbe.classList.add("selected");
-        tbe.id = `tab-${file}`
+        tbe.id = `${currentTab}`
 
         tbe.childNodes.forEach(el => {
             if (el.nodeName != "SPAN") return
             el.addEventListener("click", () => {
-                if (currentTab == "tab-" + file) {
+                if (currentTab == "tab-" + file.replace(/^.*[\\\/]/, '')) {
                     editorEle.innerHTML = `
                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
                         <img src="./logo.png" height="200px" width="200px" style="margin-bottom: 0">
@@ -63,8 +65,6 @@ class Tab {
         <textarea id="codeInput" spellcheck="false" autofocus="true" autocomplete="off">${fdata}</textarea>
         `
 
-        currentTab = "tab-" + file;
-
         setTimeout(() => {
             document.querySelector("#lineNumbers").addEventListener("scroll", (e) => {
                 document.querySelector("#codeInput").scrollTop = e.target.scrollTop;
@@ -84,6 +84,21 @@ class Tab {
                         case "{":
                             insertAtCursor(document.getElementById("codeInput"), "}")
                             break
+                        case "(":
+                            insertAtCursor(document.getElementById("codeInput"), ")")
+                            break
+                        case "[":
+                            insertAtCursor(document.getElementById("codeInput"), "]")
+                            break
+                        case "\"":
+                            insertAtCursor(document.getElementById("codeInput"), "\"")
+                            break
+                        case "\'":
+                            insertAtCursor(document.getElementById("codeInput"), "\'")
+                            break
+                        case "\`":
+                            insertAtCursor(document.getElementById("codeInput"), "\`")
+                            break
                     }
 
                     document.querySelector("#highlight").innerHTML = ext ? hljs.highlight(e.target.value, { language: ext }).value : e.target.value
@@ -99,6 +114,7 @@ class Tab {
                     }
 
                     document.getElementById("lineNumbers").innerHTML = lined2;
+                    if (e.key != "s" && !e.ctrlKey) document.querySelector(`#${currentTab} > span`).style.fontStyle = "italic"
                 })
             })
         })

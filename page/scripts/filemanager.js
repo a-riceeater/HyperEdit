@@ -44,10 +44,12 @@ async function saveFile() {
             })
 
             document.body.appendChild(em);
+            
             return
         }
 
         console.log("%c[Writer]", "color: green", "Sucessfully saved file")
+        document.querySelector(`#${currentTab} > span`).style.fontStyle = "normal"
     })
 }
 ipcRenderer.on("saveFile", saveFile);
