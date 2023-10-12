@@ -77,7 +77,10 @@ class Tab {
                 document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
             });
 
+
             document.querySelector("#codeInput").addEventListener("keydown", (e) => {
+                if (e.key == "Tab") e.preventDefault()
+
                 setTimeout(() => {
 
                     switch (e.key) {
@@ -99,6 +102,12 @@ class Tab {
                         case "\`":
                             insertAtCursor(document.getElementById("codeInput"), "\`")
                             break
+                        case "Tab":
+                            insertAtCursor(document.getElementById("codeInput"), "\t")
+                            insertAtCursor(document.getElementById("codeInput"), " ")
+                            insertAtCursor(document.getElementById("codeInput"), " ")
+                            insertAtCursor(document.getElementById("codeInput"), " ")
+                            break
                     }
 
                     document.querySelector("#highlight").innerHTML = ext ? hljs.highlight(e.target.value, { language: ext }).value : e.target.value
@@ -114,7 +123,8 @@ class Tab {
                     }
 
                     document.getElementById("lineNumbers").innerHTML = lined2;
-                    if (e.key != "s" && !e.ctrlKey) document.querySelector(`#${currentTab} > span`).style.fontStyle = "italic"
+                    console.log(e.key, e.ctrlKey, e.metaKey, e.altKey, e.shiftKey)
+                    if (e.key != "s" && !e.ctrlKey || e.key != "s" && !e.metaKey || !e.ctrlKey || !e.altKey || !e.shiftKey || !e.metaKey || e.key != "Meta") document.querySelector(`#${currentTab} > span`).style.fontStyle = "italic"
                 })
             })
         })
