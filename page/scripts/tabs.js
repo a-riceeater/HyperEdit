@@ -36,6 +36,7 @@ class Tab {
         tbe.classList.add("tab-btn");
         tbe.classList.add("selected");
         tbe.id = `${currentTab}`
+        tbe.setAttribute("data-path", file);
 
         tbe.childNodes.forEach(el => {
             if (el.nodeName != "SPAN") return

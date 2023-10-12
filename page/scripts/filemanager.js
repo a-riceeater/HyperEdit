@@ -23,7 +23,7 @@ async function saveFile() {
     if (currentTab == "tab-welcome") return
     console.log("%c[Writer]", "color: green", "Attempting to save file...")
 
-    const file = currentTab.replace("tab-", "");
+    const file = document.querySelector(".tab-btn.selected").getAttribute("data-path");
     const fdata = document.querySelector("#codeInput").value;
     
     fs.writeFile(file, fdata, (err) => {
