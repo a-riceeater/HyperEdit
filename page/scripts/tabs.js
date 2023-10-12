@@ -21,6 +21,7 @@ class Tab {
         const fdata = fs.readFileSync(file, "utf8");
         let lines = fdata.split("\n").length;
         let linedata = "";
+        const ext = /(?:\.([^.]+))?$/.exec(file)[1];
 
         for (let i = 0; i < lines; i++) {
             linedata += `${i + 1}<br>`
@@ -57,7 +58,7 @@ class Tab {
             ${linedata}
         </div>
         <pre>
-            <div id="highlight">${hljs.highlight(fdata, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value}</div>
+            <div id="highlight">${ext ? hljs.highlight(fdata, { language: ext }).value : fdata}</div>
         </pre>
         <textarea id="codeInput" spellcheck="false" autofocus="true" autocomplete="off">${fdata}</textarea>
         `
@@ -85,7 +86,7 @@ class Tab {
                             break
                     }
 
-                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value.replaceAll(`=>`, "<span class='hljs-literal'>=></span>")
+                    document.querySelector("#highlight").innerHTML = ext ? hljs.highlight(e.target.value, { language: ext }).value : e.target.value
                     document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;

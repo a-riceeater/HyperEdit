@@ -3,11 +3,17 @@ async function openFolder() {
     console.log("%c[Filehandler]", "color: purple", "Opening folder " + dirname);
     const files = fs.readdirSync(dirname);
     
+    for (let i = 0; i < files.length; i++) {
+        const file = path.join(dirname, files[i]);
+        console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
+    }
 }
 ipcRenderer.on("openFolder", openFolder);
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
+    if (!file) return
+    
     console.log("%c[Filehandler]", "color: purple", "Opening file " + file);
     new Tab(file);
 }
