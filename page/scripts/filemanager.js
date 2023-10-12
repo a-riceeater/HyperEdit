@@ -1,12 +1,15 @@
 async function openFolder() {
-    const files = await ipcRenderer.invoke("openFolder");
-    console.dir(files);
+    const dirname = (await ipcRenderer.invoke("openFolder"))[0];
+    console.log("%c[Filehandler]", "color: purple", "Opening folder " + dirname);
+    const files = fs.readdirSync(dirname);
+    
 }
 ipcRenderer.on("openFolder", openFolder);
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
-    const tab = new Tab(file);
+    console.log("%c[Filehandler]", "color: purple", "Opening file " + file);
+    new Tab(file);
 }
 ipcRenderer.on("openFile", openFile);
 
