@@ -180,10 +180,10 @@ img {
     border: none;
     outline: 0;
     background-color: transparent;
-    padding-left: 5px;
+    padding-left: 10px;
     padding-top: 5px;
     box-sizing: border-box;
-    font-family: Consolas, 'Courier New', monospace;
+    font-family: "Consolas", 'Courier New', monospace;
     font-size: 14px;
     color: transparent;
     z-index: 3;
@@ -202,7 +202,7 @@ img {
     z-index: 2;
     font-family: Consolas, 'Courier New', monospace;
     font-size: 14px;
-    padding-left: 5px;
+    padding-left: 10px;
     padding-top: 5px;
     overflow-y: scroll;
     box-sizing: border-box;
