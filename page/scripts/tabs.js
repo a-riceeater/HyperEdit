@@ -121,8 +121,13 @@ class Tab {
                     }
 
                     document.getElementById("lineNumbers").innerHTML = lined2;
-                    console.log(e.key, e.ctrlKey, e.metaKey, e.altKey, e.shiftKey)
-                    if (e.key != "s" && !e.ctrlKey || e.key != "s" && !e.metaKey || !e.ctrlKey || !e.altKey || !e.shiftKey || !e.metaKey || e.key != "Meta") document.querySelector(`#${currentTab} > span`).style.fontStyle = "italic"
+
+                    if (e.metaKey || e.key == "Meta") return
+                    if (e.ctrlKey || e.altKey || e.shiftKey) return
+                    if (e.key == "CapsLock" || e.key == "Escape") return
+                    if (e.key.toString().includes("Arrow")) return
+
+                    document.querySelector(`#${currentTab} > span`).style.fontStyle = "italic"
                 })
             })
         })

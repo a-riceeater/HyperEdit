@@ -5,7 +5,12 @@ async function openFolder() {
     
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
-        console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
+
+        if (fs.lstatSync(file).isDirectory()) {
+            console.log("%c[Files]", "color: blue", "Importing directory " + files[i])
+        } else {
+            console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
+        }
     }
 }
 ipcRenderer.on("openFolder", openFolder);
