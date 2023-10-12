@@ -78,7 +78,7 @@ class Tab {
 
             document.querySelector("#codeInput").addEventListener("keydown", (e) => {
                 setTimeout(() => {
-                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value
+                    document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value.replaceAll(`=>`, "<span class='hljs-literal'>=></span>")
                     document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
