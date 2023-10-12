@@ -21,9 +21,9 @@ body {
     left: 0;
     height: 30px;
     width: 100%;
-    -webkit-user-select: none;
     -webkit-app-region: drag;
     z-index: 100;
+    user-select: none;
 }
 
 .leftbar {
