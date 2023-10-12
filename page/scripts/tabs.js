@@ -78,6 +78,13 @@ class Tab {
 
             document.querySelector("#codeInput").addEventListener("keydown", (e) => {
                 setTimeout(() => {
+
+                    switch (e.key) {
+                        case "{":
+                            insertAtCursor(document.getElementById("codeInput"), "}")
+                            break
+                    }
+
                     document.querySelector("#highlight").innerHTML = hljs.highlight(e.target.value, { language: /(?:\.([^.]+))?$/.exec(file)[1] }).value.replaceAll(`=>`, "<span class='hljs-literal'>=></span>")
                     document.querySelector("#lineNumbers").scrollTop = e.target.scrollTop;
                     document.querySelector("#highlight").scrollTop = e.target.scrollTop;
@@ -94,5 +101,27 @@ class Tab {
                 })
             })
         })
+    }
+}
+
+function insertAtCursor(myField, myValue) {
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+        sel.moveStart('character', -1); 
+    } else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+        
+        myField.focus();
+        myField.selectionStart = startPos + myValue.length - 1; 
+        myField.selectionEnd = startPos + myValue.length - 1;
+    } else {
+        myField.value += myValue;
     }
 }

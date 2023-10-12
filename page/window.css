@@ -45,11 +45,22 @@ body {
     user-select: none;
 }
 
-#of-tb {
+.nof-op {
     margin-top: 70px;
     margin-left: 10px;
     color: var(--mar);
-    font-family: "Lato", sans-serif;
+    font-family: "Consolas", 'Courier New', monospace;
+}
+
+.nof-op > button {
+    cursor: pointer;
+    width: 90%;
+    height: 35px;
+    font-family: "DM Sans", sans-serif;
+    background-color: var(--mar);
+    color: white;
+    border: 1px solid var(--mar);
+    border-radius: 5px / 5px;
 }
 
 .tabbar>.tab-btn {
@@ -207,6 +218,10 @@ img {
     overflow-y: scroll;
     box-sizing: border-box;
     color: rgb(184, 177, 177);
+}
+
+#codeInput::selection {
+    background-color: rgb(211, 211, 211, 0.35);
 }
 
 #highlight::-webkit-scrollbar {
