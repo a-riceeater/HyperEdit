@@ -38,7 +38,7 @@ async function saveFile() {
             return
         }
 
-        console.log("%c[Writer]", "color: green", "Sucessfully wrote file")
+        console.log("%c[Writer]", "color: green", "Sucessfully saved file")
     })
 }
 ipcRenderer.on("saveFile", saveFile);
