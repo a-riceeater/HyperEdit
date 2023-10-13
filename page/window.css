@@ -50,6 +50,8 @@ body {
     margin-left: 10px;
     color: var(--mar);
     font-family: "Consolas", 'Courier New', monospace;
+    height: calc(100% - 70px);
+    overflow-y: scroll;
 }
 
 .nof-op > button {

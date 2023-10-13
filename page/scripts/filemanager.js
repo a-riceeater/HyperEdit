@@ -22,6 +22,8 @@ async function openFolder() {
 
             document.querySelector(".nof-op").appendChild(folderElm);
 
+            recursiveFolder(file, 10)
+
         } else {
             console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
 
@@ -34,6 +36,30 @@ async function openFolder() {
     }
 }
 ipcRenderer.on("openFolder", openFolder);
+
+function recursiveFolder(dirname, indent) {
+    console.log(dirname)
+    const files = fs.readdirSync(dirname);
+    
+    for (let i = 0; i < files.length; i++) {
+        const file = path.join(dirname, files[i]);
+        
+        if (fs.lstatSync(file).isDirectory()) {
+            const folderElm = document.createElement("div");
+            folderElm.innerHTML = file.replace(/^.*[\\\/]/, '');
+            folderElm.setAttribute("data-path", file);
+            folderElm.style.marginLeft = indent + "px";
+            document.querySelector(".nof-op").appendChild(folderElm);
+            recursiveFolder(file, indent + 10);
+        } else {
+            const fileElm = document.createElement("div");
+            fileElm.innerHTML = file.replace(/^.*[\\\/]/, '');
+            fileElm.setAttribute("data-path", file);
+            fileElm.style.marginLeft = indent + "px";
+            document.querySelector(".nof-op").appendChild(fileElm);
+        }
+    }
+}
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
