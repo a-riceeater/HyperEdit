@@ -8,7 +8,7 @@ async function openFolder() {
     const fnameElm = document.createElement("div");
     fnameElm.innerHTML = dirname.replace(/^.*[\\\/]/, '');
     document.querySelector(".nof-op").appendChild(fnameElm);
-    
+
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
 
@@ -45,10 +45,10 @@ function recursiveFolder(dirname, indent, parentElm) {
     containerElm.style.marginLeft = indent + "px";
     containerElm.style.display = "none"
     document.querySelector(".nof-op").appendChild(containerElm);
-    
+
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
-        
+
         if (fs.lstatSync(file).isDirectory()) {
             const folderElm = document.createElement("div");
             folderElm.innerHTML = file.replace(/^.*[\\\/]/, '');
@@ -61,15 +61,16 @@ function recursiveFolder(dirname, indent, parentElm) {
             fileElm.setAttribute("data-path", file);
             containerElm.appendChild(fileElm);
         }
+        // secondary recursive folder issue: it gets put somerwhere else idk how to describe
     }
 
-    parentElm.addEventListener("click", () =>  containerElm.style.display = containerElm.style.display == "none" ? "block" : "none" )
+    parentElm.addEventListener("click", () => containerElm.style.display = containerElm.style.display == "none" ? "block" : "none")
 }
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
     if (!file) return
-    
+
     console.log("%c[Filehandler]", "color: purple", "Opening file " + file);
     new Tab(file);
 }
@@ -81,7 +82,7 @@ async function saveFile() {
 
     const file = document.querySelector(".tab-btn.selected").getAttribute("data-path");
     const fdata = document.querySelector("#codeInput").value;
-    
+
     fs.writeFile(file, fdata, (err) => {
         if (err) {
             console.log("%cWriter", "color: red", "Failed to write file!")
@@ -100,7 +101,7 @@ async function saveFile() {
             })
 
             document.body.appendChild(em);
-            
+
             return
         }
 
