@@ -267,3 +267,12 @@ img {
 #lineNumbers::-webkit-scrollbar {
     display: none;
 }
+
+.lf-file, .lf-folder {
+    cursor: pointer;
+    width: 100%;
+}
+
+.lf-file:hover, .lf-folder:hover {
+    background-color: var(--av);
+}

@@ -28,12 +28,19 @@ async function loadFolderContents(parentElm, dirname, indent) {
 
             parentElm.appendChild(folderElm);
 
-            folderElm.addEventListener("click", async () => {
+            folderElm.addEventListener("click", async (e) => {
+                if (e.target.getAttribute("data-path") != folderElm.getAttribute("data-path")) return
                 if (!folderElm.hasLoaded) {
                     await loadFolderContents(folderElm, file, indent + 10);
                     folderElm.hasLoaded = true;
                 }
                 folderElm.classList.toggle("expanded");
+
+                // Toggle the display style for child elements
+                const childElements = folderElm.querySelectorAll('.folder, div[data-path]');
+                for (const child of childElements) {
+                    child.style.display = folderElm.classList.contains("expanded") ? "block" : "none";
+                }
             });
         } else {
             const fileElm = document.createElement("div");
@@ -45,7 +52,6 @@ async function loadFolderContents(parentElm, dirname, indent) {
         }
     }
 }
-
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
