@@ -271,6 +271,7 @@ img {
 .lb-file, .lb-folder {
     cursor: pointer;
     width: 100%;
+    user-select: none;
 }
 
 .lb-file:hover, .lb-folder:hover {
