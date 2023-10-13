@@ -21,23 +21,22 @@ async function loadFolderContents(parentElm, dirname, indent) {
             }
 
             const folderElm = document.createElement("div");
-            folderElm.innerHTML = files[i];
+            folderElm.innerHTML = `<span class="lb-folder">${files[i]}</span>`;
             folderElm.setAttribute("data-path", file);
-            folderElm.classList.add("folder");
             folderElm.style.marginLeft = indent + "px";
 
             parentElm.appendChild(folderElm);
 
             folderElm.addEventListener("click", async (e) => {
-                if (e.target.getAttribute("data-path") != folderElm.getAttribute("data-path")) return
-                // note that if the folder parent is clicked (not the files inside) it will hide the folder
+                if (e.target.nodeName == "SPAN" && e.target.parentNode.getAttribute("data-path") != folderElm.getAttribute("data-path")) return
+                if (e.target.nodeName == "DIV") return
+
                 if (!folderElm.hasLoaded) {
                     await loadFolderContents(folderElm, file, indent + 10);
                     folderElm.hasLoaded = true;
                 }
                 folderElm.classList.toggle("expanded");
 
-                // Toggle the display style for child elements
                 const childElements = folderElm.querySelectorAll('.folder, div[data-path]');
                 for (const child of childElements) {
                     child.style.display = folderElm.classList.contains("expanded") ? "block" : "none";
@@ -45,7 +44,7 @@ async function loadFolderContents(parentElm, dirname, indent) {
             });
         } else {
             const fileElm = document.createElement("div");
-            fileElm.innerHTML = files[i];
+            fileElm.innerHTML = `<span class="lb-file">${files[i]}</span>`;
             fileElm.setAttribute("data-path", file);
             fileElm.style.marginLeft = indent + "px";
 
