@@ -2,12 +2,26 @@ async function openFolder() {
     const dirname = (await ipcRenderer.invoke("openFolder"))[0];
     console.log("%c[Filehandler]", "color: purple", "Opening folder " + dirname);
     const files = fs.readdirSync(dirname);
+
+    document.querySelector(".nof-op").innerHTML = "";
+
+    const fnameElm = document.createElement("div");
+    fnameElm.innerHTML = dirname.replace(/^.*[\\\/]/, '');
+    document.querySelector(".nof-op").appendChild(fnameElm);
     
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
 
         if (fs.lstatSync(file).isDirectory()) {
             console.log("%c[Files]", "color: blue", "Importing directory " + files[i])
+            if (files[i] == ".git") { console.log("%c[Files]", "color: yellow", ".git directory detected, ignoring"); continue }
+
+            const folderElm = document.createElement("div");
+            folderElm.innerHTML = files[i];
+            folderElm.setAttribute("data-path", file);
+
+            document.querySelector(".nof-op").appendChild(folderElm);
+
         } else {
             console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
         }
