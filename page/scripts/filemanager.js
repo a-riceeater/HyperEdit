@@ -19,6 +19,7 @@ async function openFolder() {
             const folderElm = document.createElement("div");
             folderElm.innerHTML = files[i];
             folderElm.setAttribute("data-path", file);
+            folderElm.setAttribute("data-parent", "root")
 
             document.querySelector(".nof-op").appendChild(folderElm);
 
@@ -37,14 +38,15 @@ async function openFolder() {
 }
 ipcRenderer.on("openFolder", openFolder);
 
-function recursiveFolder(dirname, indent, parentElm) {
+async function recursiveFolder(dirname, indent, parentElm) {
     console.log(dirname)
     const files = fs.readdirSync(dirname);
 
     const containerElm = document.createElement("div");
     containerElm.style.marginLeft = indent + "px";
     containerElm.style.display = "none"
-    document.querySelector(".nof-op").appendChild(containerElm);
+    containerElm.setAttribute("data-parent", parentElm.innerHTML)
+    parentElm.appendChild(containerElm);
 
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
@@ -53,8 +55,9 @@ function recursiveFolder(dirname, indent, parentElm) {
             const folderElm = document.createElement("div");
             folderElm.innerHTML = file.replace(/^.*[\\\/]/, '');
             folderElm.setAttribute("data-path", file);
+            folderElm.setAttribute("data-parent", parentElm.innerHTML)
             containerElm.appendChild(folderElm);
-            recursiveFolder(file, indent + 10, folderElm);
+            await recursiveFolder(file, indent + 10, folderElm);
         } else {
             const fileElm = document.createElement("div");
             fileElm.innerHTML = file.replace(/^.*[\\\/]/, '');
@@ -62,9 +65,13 @@ function recursiveFolder(dirname, indent, parentElm) {
             containerElm.appendChild(fileElm);
         }
         // secondary recursive folder issue: it gets put somerwhere else idk how to describe
+
     }
 
-    parentElm.addEventListener("click", () => containerElm.style.display = containerElm.style.display == "none" ? "block" : "none")
+    parentElm.addEventListener("click", (e) => {
+        if (!e.target.getAttribute("data-parent")) return
+        containerElm.style.display = containerElm.style.display == "none" ? "block" : "none"
+    })
 }
 
 async function openFile() {
