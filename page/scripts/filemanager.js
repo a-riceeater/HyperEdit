@@ -1,78 +1,51 @@
 async function openFolder() {
     const dirname = (await ipcRenderer.invoke("openFolder"))[0];
     console.log("%c[Filehandler]", "color: purple", "Opening folder " + dirname);
-    const files = fs.readdirSync(dirname);
-
     document.querySelector(".nof-op").innerHTML = "";
+    await loadFolderContents(document.querySelector(".nof-op"), dirname, 0);
+}
 
-    const fnameElm = document.createElement("div");
-    fnameElm.innerHTML = dirname.replace(/^.*[\\\/]/, '');
-    document.querySelector(".nof-op").appendChild(fnameElm);
+ipcRenderer.on("openFolder", openFolder);
+
+async function loadFolderContents(parentElm, dirname, indent) {
+    const files = await fs.promises.readdir(dirname);
 
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
+        const stats = await fs.promises.lstat(file);
 
-        if (fs.lstatSync(file).isDirectory()) {
-            console.log("%c[Files]", "color: blue", "Importing directory " + files[i])
-            if (files[i] == ".git") { console.log("%c[Files]", "color: yellow", ".git directory detected, ignoring"); continue }
+        if (stats.isDirectory()) {
+            if (files[i] === ".git") {
+                console.log("%c[Files]", "color: yellow", ".git directory detected, ignoring");
+                continue;
+            }
 
             const folderElm = document.createElement("div");
             folderElm.innerHTML = files[i];
             folderElm.setAttribute("data-path", file);
-            folderElm.setAttribute("data-parent", "root")
+            folderElm.classList.add("folder");
+            folderElm.style.marginLeft = indent + "px";
 
-            document.querySelector(".nof-op").appendChild(folderElm);
+            parentElm.appendChild(folderElm);
 
-            recursiveFolder(file, 10, folderElm)
-
+            folderElm.addEventListener("click", async () => {
+                if (!folderElm.hasLoaded) {
+                    await loadFolderContents(folderElm, file, indent + 10);
+                    folderElm.hasLoaded = true;
+                }
+                folderElm.classList.toggle("expanded");
+            });
         } else {
-            console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
-
             const fileElm = document.createElement("div");
             fileElm.innerHTML = files[i];
             fileElm.setAttribute("data-path", file);
+            fileElm.style.marginLeft = indent + "px";
 
-            document.querySelector(".nof-op").appendChild(fileElm);
+            parentElm.appendChild(fileElm);
         }
     }
 }
-ipcRenderer.on("openFolder", openFolder);
 
-function recursiveFolder(dirname, indent, parentElm) {
-    console.log(dirname)
-    const files = fs.readdirSync(dirname);
-
-    const containerElm = document.createElement("div");
-    containerElm.style.marginLeft = indent + "px";
-    containerElm.style.display = "none"
-    containerElm.setAttribute("data-parent", parentElm.innerHTML)
-    parentElm.appendChild(containerElm);
-
-    for (let i = 0; i < files.length; i++) {
-        const file = path.join(dirname, files[i]);
-
-        if (fs.lstatSync(file).isDirectory()) {
-            const folderElm = document.createElement("div");
-            folderElm.innerHTML = file.replace(/^.*[\\\/]/, '');
-            folderElm.setAttribute("data-path", file);
-            folderElm.setAttribute("data-parent", parentElm.innerHTML)
-            containerElm.appendChild(folderElm);
-            recursiveFolder(file, indent + 10, folderElm);
-        } else {
-            const fileElm = document.createElement("div");
-            fileElm.innerHTML = file.replace(/^.*[\\\/]/, '');
-            fileElm.setAttribute("data-path", file);
-            containerElm.appendChild(fileElm);
-        }
-        // secondary recursive folder issue: it gets put somerwhere else idk how to describe
-
-    }
-
-    parentElm.addEventListener("click", (e) => {
-        if (e.target.getAttribute("data-parent") != parentElm.getAttribute("data-parent")) return
-        containerElm.style.display = containerElm.style.display == "none" ? "block" : "none"
-    })
-}
 
 async function openFile() {
     const file = (await ipcRenderer.invoke("openFile"))[0];
