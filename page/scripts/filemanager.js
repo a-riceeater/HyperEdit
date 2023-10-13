@@ -24,6 +24,12 @@ async function openFolder() {
 
         } else {
             console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
+
+            const fileElm = document.createElement("div");
+            fileElm.innerHTML = files[i];
+            fileElm.setAttribute("data-path", file);
+
+            document.querySelector(".nof-op").appendChild(fileElm);
         }
     }
 }
