@@ -69,7 +69,7 @@ function recursiveFolder(dirname, indent, parentElm) {
     }
 
     parentElm.addEventListener("click", (e) => {
-        if (!e.target.getAttribute("data-parent")) return
+        if (e.target.getAttribute("data-parent") != parentElm.getAttribute("data-parent")) return
         containerElm.style.display = containerElm.style.display == "none" ? "block" : "none"
     })
 }
