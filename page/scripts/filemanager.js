@@ -30,6 +30,7 @@ async function loadFolderContents(parentElm, dirname, indent) {
 
             folderElm.addEventListener("click", async (e) => {
                 if (e.target.getAttribute("data-path") != folderElm.getAttribute("data-path")) return
+                // note that if the folder parent is clicked (not the files inside) it will hide the folder
                 if (!folderElm.hasLoaded) {
                     await loadFolderContents(folderElm, file, indent + 10);
                     folderElm.hasLoaded = true;
