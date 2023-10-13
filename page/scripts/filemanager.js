@@ -38,7 +38,7 @@ async function openFolder() {
 }
 ipcRenderer.on("openFolder", openFolder);
 
-async function recursiveFolder(dirname, indent, parentElm) {
+function recursiveFolder(dirname, indent, parentElm) {
     console.log(dirname)
     const files = fs.readdirSync(dirname);
 
@@ -57,7 +57,7 @@ async function recursiveFolder(dirname, indent, parentElm) {
             folderElm.setAttribute("data-path", file);
             folderElm.setAttribute("data-parent", parentElm.innerHTML)
             containerElm.appendChild(folderElm);
-            await recursiveFolder(file, indent + 10, folderElm);
+            recursiveFolder(file, indent + 10, folderElm);
         } else {
             const fileElm = document.createElement("div");
             fileElm.innerHTML = file.replace(/^.*[\\\/]/, '');
