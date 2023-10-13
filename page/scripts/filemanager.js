@@ -22,7 +22,7 @@ async function openFolder() {
 
             document.querySelector(".nof-op").appendChild(folderElm);
 
-            recursiveFolder(file, 10)
+            recursiveFolder(file, 10, folderElm)
 
         } else {
             console.log("%c[Files]", "color: blue", "Importing " + files[i] + "...");
@@ -37,9 +37,14 @@ async function openFolder() {
 }
 ipcRenderer.on("openFolder", openFolder);
 
-function recursiveFolder(dirname, indent) {
+function recursiveFolder(dirname, indent, parentElm) {
     console.log(dirname)
     const files = fs.readdirSync(dirname);
+
+    const containerElm = document.createElement("div");
+    containerElm.style.marginLeft = indent + "px";
+    containerElm.style.display = "none"
+    document.querySelector(".nof-op").appendChild(containerElm);
     
     for (let i = 0; i < files.length; i++) {
         const file = path.join(dirname, files[i]);
@@ -48,17 +53,17 @@ function recursiveFolder(dirname, indent) {
             const folderElm = document.createElement("div");
             folderElm.innerHTML = file.replace(/^.*[\\\/]/, '');
             folderElm.setAttribute("data-path", file);
-            folderElm.style.marginLeft = indent + "px";
-            document.querySelector(".nof-op").appendChild(folderElm);
-            recursiveFolder(file, indent + 10);
+            containerElm.appendChild(folderElm);
+            recursiveFolder(file, indent + 10, folderElm);
         } else {
             const fileElm = document.createElement("div");
             fileElm.innerHTML = file.replace(/^.*[\\\/]/, '');
             fileElm.setAttribute("data-path", file);
-            fileElm.style.marginLeft = indent + "px";
-            document.querySelector(".nof-op").appendChild(fileElm);
+            containerElm.appendChild(fileElm);
         }
     }
+
+    parentElm.addEventListener("click", () =>  containerElm.style.display = containerElm.style.display == "none" ? "block" : "none" )
 }
 
 async function openFile() {
