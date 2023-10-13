@@ -1,7 +1,7 @@
 async function openFolder() {
     const dirname = (await ipcRenderer.invoke("openFolder"))[0];
     console.log("%c[Filehandler]", "color: purple", "Opening folder " + dirname);
-    document.querySelector(".nof-op").innerHTML = "";
+    document.querySelector(".nof-op").innerHTML = `<p>${dirname.replace(/^.*[\\\/]/, '')}</p>`;
     await loadFolderContents(document.querySelector(".nof-op"), dirname, 0);
 }
 
@@ -47,6 +47,7 @@ async function loadFolderContents(parentElm, dirname, indent) {
             fileElm.innerHTML = `<span class="lb-file">${files[i]}</span>`;
             fileElm.setAttribute("data-path", file);
             fileElm.style.marginLeft = indent + "px";
+            fileElm.addEventListener("click", () => new Tab(file));
 
             parentElm.appendChild(fileElm);
         }
