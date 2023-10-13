@@ -268,11 +268,11 @@ img {
     display: none;
 }
 
-.lf-file, .lf-folder {
+.lb-file, .lb-folder {
     cursor: pointer;
     width: 100%;
 }
 
-.lf-file:hover, .lf-folder:hover {
+.lb-file:hover, .lb-folder:hover {
     background-color: var(--av);
 }
