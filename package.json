@@ -10,5 +10,8 @@
     "main": "window.js",
     "name": "HyperEdit",
     "version": "1.0.0",
-    "author": "a-riceeater"
+    "author": "a-riceeater",
+    "dependencies": {
+        "node-pty": "^1.0.0"
+    }
 }
