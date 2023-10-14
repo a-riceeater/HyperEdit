@@ -290,3 +290,28 @@ img {
 .lb-file:hover, .lb-folder:hover {
     background-color: var(--av);
 }
+
+.terminal {
+    position: fixed;
+    bottom: 0;
+    left: 20%;
+    width: calc(100% - 20%);
+    height: 20%;
+    border-top: 1px solid gray;
+}
+
+.terminal > .tbl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+
+.terminal > .tbl > p {
+    font-family: "Lato", sans-serif;
+    color: white;
+    border-bottom: 1px solid white;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
