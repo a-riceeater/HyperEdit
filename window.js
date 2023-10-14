@@ -35,13 +35,13 @@ function setMainMenu(win) {
                 submenu: [
                     { role: 'about' },
                     { type: 'separator' },
-                    { 
+                    {
                         label: "Check for updates",
                         click() {
                             // search for updates
                             console.log("Searching for updates...")
                         }
-                     },
+                    },
                     { role: 'quit' }
                 ]
             }]
@@ -186,7 +186,7 @@ function createLoaderWindow() {
     })
 
     win.loadFile(path.join(__dirname, "page", "updater.html"));
-    
+
     setTimeout(() => {
         win.close();
         createMainWindow();
@@ -218,3 +218,26 @@ async function openFolder() {
 async function openFile() {
     return dialog.showOpenDialogSync({ properties: ['openFile'] });
 }
+
+ipcMain.on('start-terminal', (event, shell) => {
+    // Spawn the terminal process
+    const { spawn } = require('node-pty');
+    const ptyProcess = spawn(shell, [], {
+        name: 'xterm-color',
+        cols: 80,
+        rows: 24,
+        cwd: process.env.HOME,
+        env: process.env,
+    });
+
+    // Send data from the terminal to the renderer
+    ptyProcess.onData((data) => {
+        event.sender.send('terminal-data', data);
+    });
+
+    // Receive user input from the renderer and send it to the terminal
+    ipcMain.on('terminal-input', (event, input) => {
+        console.log(input)
+        ptyProcess.write(input);
+    });
+});
