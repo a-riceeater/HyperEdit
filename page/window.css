@@ -216,6 +216,15 @@ img {
     caret-color: rgb(184, 177, 177);
 }
 
+#caretElement {
+    position: fixed;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 999;
+    display: none;
+}
+
 #highlight {
     position: absolute;
     top: 0;
