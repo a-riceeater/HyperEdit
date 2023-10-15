@@ -1,3 +1,15 @@
+@import url("./fonts.css");
+
+:root {
+    --cbg: #2A2B2A;
+    --vista: #8CA0D7;
+    --jordy: #91C4F2;
+    --av: #9D79BC;
+    --pur: #A14DA0;
+    --mar: #7E1F86;
+}
+
+
 body {
     background-color: #2A2B2A;
 }
@@ -17,6 +29,10 @@ body {
     left: 25%;
     top: 50%;
     margin-top: 0;
+    font-family: "Raleway", sans-serif;
+    color: var(--jordy);
+    font-size: 2em;
+    text-decoration: none;
 }
 
 .topbar > .tbl-download {
@@ -25,6 +41,15 @@ body {
     right: 250px;
     transform: translate(-50%, -50%);
     margin-top: 0;
+    font-family: "DM Sans", sans-serif;
+    color: lightgray;
+    background-color: var(--pur);
+    height: 30px;
+    border-radius: 20px / 20px;
+    display: flex;
+    align-items: center;
+    width: 90px;
+    justify-content: center;
 }
 
 .topbar > .tbl-github {
@@ -33,4 +58,15 @@ body {
     right: 400px;
     margin-top: 0;
     transform: translate(-50%, -50%);
+    font-family: "DM Sans", sans-serif;
+    color: lightgray;
+}
+
+.topbar > .tbl {
+    transition: .25s;
+    text-decoration: none;
+}
+
+.topbar > .tbl:hover {
+    color: var(--vista);
 }
