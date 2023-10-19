@@ -79,12 +79,13 @@ class Tab {
                 document.querySelector("#highlight").scrollTop = e.target.scrollTop;
                 document.querySelector("#highlight").scrollLeft = e.target.scrollLeft;
             });
-
+            
 
             document.querySelector("#codeInput").addEventListener("keydown", (e) => {
                 if (e.key == "Tab") e.preventDefault()
 
                 setTimeout(() => {
+                    initIsense();
 
                     switch (e.key) {
                         case "{":

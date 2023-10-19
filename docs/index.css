@@ -1,0 +1,124 @@
+@import url("./fonts.css");
+
+:root {
+    --cbg: #2A2B2A;
+    --vista: #8CA0D7;
+    --jordy: #91C4F2;
+    --av: #9D79BC;
+    --pur: #A14DA0;
+    --mar: #7E1F86;
+}
+
+
+body {
+    background-color: #2A2B2A;
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+}
+
+.topbar > .logo {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 25%;
+    top: 50%;
+    margin-top: 0;
+    font-family: "Raleway", sans-serif;
+    color: var(--jordy);
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.topbar > .tbl-download {
+    position: absolute;
+    top: 50%;
+    right: 250px;
+    transform: translate(-50%, -50%);
+    margin-top: 0;
+    font-family: "DM Sans", sans-serif;
+    color: lightgray;
+    background-color: var(--pur);
+    height: 30px;
+    border-radius: 20px / 20px;
+    display: flex;
+    align-items: center;
+    width: 90px;
+    justify-content: center;
+}
+
+.topbar > .tbl-github {
+    position: absolute;
+    top: 50%;
+    right: 400px;
+    margin-top: 0;
+    transform: translate(-50%, -50%);
+    font-family: "DM Sans", sans-serif;
+    color: lightgray;
+}
+
+.topbar > .tbl {
+    transition: .25s;
+    text-decoration: none;
+}
+
+.topbar > .tbl:hover {
+    color: var(--vista);
+}
+
+.content {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    text-align: center;
+    padding-top: 55px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+
+.content > h1 {
+    background: linear-gradient(90deg,#f5b3b3,#e6ace9,#c4b6ff,#a4dcad,#f1b3d9,#f1dea7); 
+    -webkit-background-clip: text; 
+    background-clip: text;
+    background-size: 200%; 
+    -webkit-text-fill-color: transparent; 
+    animation: shine 10s linear infinite;
+    font-family: "Raleway", sans-serif;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+.content > p {
+    font-family: "DM Sans", sans-serif;
+    margin-top: 0;
+    color: lightgray;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+
+.content > img {
+    max-height: 80%;
+    max-width: 70%;
+    border-radius: 10px / 10px;
+    -webkit-user-drag: none;
+}
+
+@-webkit-keyframes shine {
+    to {
+        background-position: 200%
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position: 200%
+    }
+}
